@@ -10,27 +10,22 @@ using namespace std;
 
 void solve(){
 	string s;
-	//getline(cin, s); //cin.ignore();
-	cin >> s; //cin.ignore();
-	//cout << s << " ";
+	cin >> s; 
+	int res = 0;
 	stack <char> st;
-	int d = 0, m = 0;
 	for (int i = 0; i < s.size(); i++) {
-		if(s[i]=='('){
-			if(d<0) {
-				d = -d;  m = m + d/2;
-				if(d%2) {
-					d = 2;
-					m++;
-				} else d = 1;
-			}
-			else d++;
+		if(s[i]==')' && st.empty()){
+			st.push('(');
+			res ++;
+			continue;
 		}
-		else  d--;
+		if (s[i] == ')' && !st.empty() && st.top() == '(') {
+			st.pop();
+			continue;
+		}
+		st.push(s[i]);
 	}
-	if(d < 0)  d = -d;
-    if(d % 2) d++; m += d/2;
-    cout << m << endl;
+    cout << res + st.size()/2 << endl;
 }
 
 int main(){
